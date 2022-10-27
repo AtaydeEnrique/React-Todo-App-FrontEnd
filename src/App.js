@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Filter from "./components/Filter";
+import NewTodo from "./components/TodoAddEdit/NewTodo";
+import TodoTable from "./components/TodoTable";
+import "./App.css";
+import EditTodo from "./components/TodoAddEdit/EditTodo";
 
 function App() {
+  const [isEditing, setIsEditing] = useState(false);
+  const handleEdit = () => {
+    setIsEditing((editing) => !editing);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {isEditing && <EditTodo isEditing={isEditing} handleEdit={handleEdit} />}
+      <div className="App">
+        <div>
+          <h1>To do List</h1>
+        </div>
+        <div>
+          <Filter />
+          <NewTodo />
+          <TodoTable handling={handleEdit} />
+        </div>
+      </div>
+    </>
   );
 }
 

@@ -1,0 +1,61 @@
+.todo-filter-section {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  margin: auto;
+  border: thin black solid;
+}
+.todo-filter-section form {
+  margin: 10px 0;
+}
+
+.todo-name-filter {
+  display: flex;
+  max-width: 95%;
+  margin: 10px 0;
+}
+.todo-name-filter label {
+  display: block;
+  margin: 0px 20px;
+}
+.todo-name-filter input {
+  display: block;
+  width: 100%;
+}
+
+.todo-filter-wrapper {
+  display: flex;
+}
+
+.todo-drop-filters {
+  width: 50%;
+}
+.todo-prio-filter {
+  display: flex;
+  margin: 10px 20px;
+}
+.todo-prio-filter p {
+  margin: 0;
+  margin-right: 10px;
+}
+.todo-prio-filter select {
+  width: 100%;
+}
+.todo-state-filter {
+  display: flex;
+  margin: 10px 20px;
+}
+.todo-state-filter p {
+  margin: 0;
+  margin-right: 25px;
+}
+.todo-state-filter select {
+  width: 100%;
+}
+
+.todo-filter-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+}
