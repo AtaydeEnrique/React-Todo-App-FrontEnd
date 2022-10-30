@@ -1,26 +1,33 @@
 import React, { useState } from "react";
 import Filter from "./components/Filter";
-import NewTodo from "./components/TodoAddEdit/NewTodo";
 import TodoTable from "./components/TodoTable";
 import "./App.css";
-import EditTodo from "./components/TodoAddEdit/EditTodo";
+import TodoModal from "./components/TodoModal/TodoModal";
 
 function App() {
   const [isEditing, setIsEditing] = useState(false);
+  const [newTodo, setNewTodo] = useState(false);
+
   const handleEdit = () => {
-    setIsEditing((editing) => !editing);
+    setIsEditing((event) => !event);
+  };
+  const handleNew = () => {
+    setNewTodo((event) => !event);
   };
 
   return (
     <>
-      {isEditing && <EditTodo isEditing={isEditing} handleEdit={handleEdit} />}
+      {isEditing && <TodoModal isEditing={isEditing} handleEdit={handleEdit} />}
+      {newTodo && <TodoModal newTodo={newTodo} handleNew={handleNew} />}
       <div className="App">
         <div>
           <h1>To do List</h1>
         </div>
         <div>
           <Filter />
-          <NewTodo />
+          <div className="new-todo-wrapper">
+            <button onClick={() => setNewTodo((s) => !s)}>+ New ToDo</button>
+          </div>
           <TodoTable handling={handleEdit} />
         </div>
       </div>

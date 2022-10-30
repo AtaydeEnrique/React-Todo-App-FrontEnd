@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-function TodoForm({ isEditing }) {
+function TodoForm({ isEditing, newTodo }) {
   const [inputValue, setInputValue] = useState("");
   const [nameIsValid, setNameIsValid] = useState(false);
   const [nameFocus, setNameFocus] = useState(false);
 
-  const handleSubmitNewTodo = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
   };
 
@@ -24,10 +24,10 @@ function TodoForm({ isEditing }) {
   console.log(setRequired);
   console.log(false == 0);
   return (
-    <div className={isEditing ? "edit-todo-form" : "new-todo-form"}>
+    <div className="todo-form">
       <form>
-        <div className="new-todo-section">
-          <div className="new-todo-input">
+        <div className="todo-section">
+          <div className="todo-input">
             <label htmlFor="newtodo-name">Name</label>
             <input
               type="text"
@@ -41,8 +41,8 @@ function TodoForm({ isEditing }) {
             {!setRequired ? null : <span>Required</span>}
           </div>
         </div>
-        <div className="new-todo-section">
-          <div className="new-todo-input">
+        <div className="todo-section">
+          <div className="todo-input">
             <p>Priority</p>
             <select>
               <option value="high">High</option>
@@ -50,12 +50,12 @@ function TodoForm({ isEditing }) {
               <option value="low">Low</option>
             </select>
           </div>
-          <div className="new-todo-input">
+          <div className="todo-input">
             <label htmlFor="newtodo-date">Due Date</label>
             <input type="date" name="newtodo-date" id="newtodo-date" />
           </div>
-          <div className="todo-form-btns">
-            <button type="submit" onClick={handleSubmitNewTodo}>
+          <div className="form-btns">
+            <button type="submit" onClick={handleSubmit}>
               Submit
             </button>
           </div>
