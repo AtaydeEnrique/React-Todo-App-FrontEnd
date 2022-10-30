@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function TodoForm({ isEditing, newTodo }) {
   const [inputValue, setInputValue] = useState("");
   const [nameIsValid, setNameIsValid] = useState(false);
   const [nameFocus, setNameFocus] = useState(false);
 
+  const addTodo = async (item) => {
+    const { data } = axios.post("http://localhost:9090/todos/", {
+      name: inputValue,
+      completed: false,
+    });
+  };
+
   const handleSubmit = (e) => {
+    addTodo();
     e.preventDefault();
   };
 
@@ -19,10 +28,8 @@ function TodoForm({ isEditing, newTodo }) {
     setInputValue(name);
   };
 
-  const setRequired = nameFocus == true && nameIsValid == false;
+  const setRequired = nameFocus === true && nameIsValid === false;
 
-  console.log(setRequired);
-  console.log(false == 0);
   return (
     <div className="todo-form">
       <form>
@@ -35,8 +42,8 @@ function TodoForm({ isEditing, newTodo }) {
               onChange={handleNameChange}
               onBlur={() => setNameFocus(true)}
               placeholder="Activity"
-              name="newtodo-name"
-              id="newtodo-name"
+              name="name"
+              id="name"
             />
             {!setRequired ? null : <span>Required</span>}
           </div>
@@ -51,7 +58,7 @@ function TodoForm({ isEditing, newTodo }) {
             </select>
           </div>
           <div className="todo-input">
-            <label htmlFor="newtodo-date">Due Date</label>
+            <label htmlFor="todo-date">Due Date</label>
             <input type="date" name="newtodo-date" id="newtodo-date" />
           </div>
           <div className="form-btns">

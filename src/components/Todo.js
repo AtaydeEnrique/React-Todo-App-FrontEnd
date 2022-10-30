@@ -3,13 +3,17 @@ import React from "react";
 import deleteIcon from "../assets/icons/delete.svg";
 import editIcon from "../assets/icons/edit.svg";
 import "./Todo.css";
-function Todo({ handling }) {
+function Todo({ handling, todo: { name, completed } }) {
   return (
     <tr>
-      <td>
-        <input type="checkbox" />
+      <td className="checkbox-wrap">
+        <div className="todo-checkbox">
+          <label>
+            <input type="checkbox" />
+          </label>
+        </div>
       </td>
-      <td>Cell B</td>
+      <td>{name}</td>
       <td>Cell B</td>
       <td>Cell B</td>
       <td className="action-icons">
