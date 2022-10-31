@@ -1,27 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import Todo from "./Todo";
 import "./TodoTable.css";
 
 function TodoTable({ handling }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [data, setData] = useState([]);
+  const [deleteItem, setDeleteItem] = useState(false);
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.data);
+  const reload = useSelector((state) => state.reload);
+
+  const deleteItemHandler = () => {
+    setDeleteItem((event) => !event);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       // CORS, Cross Origin Resource Sharing
       const response = await axios.get("http://localhost:9090/todos/");
-      setData(response);
+      dispatch({ type: "GET", payload: response });
     };
 
     fetchData();
-  }, []);
-  console.log(data);
-  console.log(data?.data?.length);
+  }, [dispatch, deleteItem, reload]);
 
   return (
     <>
-      {data?.data?.length > 0 ? (
+      {todos?.length > 0 ? (
         <table className="todo-table">
           <thead>
             <tr>
@@ -39,8 +45,13 @@ function TodoTable({ handling }) {
             </tr>
           </thead>
           <tbody>
-            {data?.data?.map((todo) => (
-              <Todo key={todo.id} handling={handling} todo={todo} />
+            {todos?.map((todo) => (
+              <Todo
+                key={todo.id}
+                handling={handling}
+                todo={todo}
+                deleteItemHandler={deleteItemHandler}
+              />
             ))}
           </tbody>
         </table>

@@ -1,21 +1,35 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
-function TodoForm({ isEditing, newTodo }) {
+function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
   const [inputValue, setInputValue] = useState("");
   const [nameIsValid, setNameIsValid] = useState(false);
   const [nameFocus, setNameFocus] = useState(false);
+  const dispatch = useDispatch();
 
-  const addTodo = async (item) => {
-    const { data } = axios.post("http://localhost:9090/todos/", {
+  useEffect(() => {
+    if (isEditing) setInputValue(todoData.name);
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
       name: inputValue,
       completed: false,
-    });
-  };
+    };
 
-  const handleSubmit = (e) => {
-    addTodo();
-    e.preventDefault();
+    if (isNew) {
+      await axios.post("http://localhost:9090/todos/", data);
+      dispatch({ type: "RELOAD" });
+      handleNew();
+    }
+
+    if (isEditing) {
+      await axios.put(`http://localhost:9090/todos/${todoData.id}`, data);
+      dispatch({ type: "PUT_INFO", payload: { data: data, id: todoData.id } });
+      handleEdit();
+    }
   };
 
   const handleNameChange = (e) => {
@@ -62,9 +76,7 @@ function TodoForm({ isEditing, newTodo }) {
             <input type="date" name="newtodo-date" id="newtodo-date" />
           </div>
           <div className="form-btns">
-            <button type="submit" onClick={handleSubmit}>
-              Submit
-            </button>
+            <button onClick={handleSubmit}>Submit</button>
           </div>
         </div>
       </form>
