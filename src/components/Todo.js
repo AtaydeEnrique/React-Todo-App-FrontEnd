@@ -5,7 +5,7 @@ import deleteIcon from "../assets/icons/delete.svg";
 import editIcon from "../assets/icons/edit.svg";
 
 import "./Todo.css";
-function Todo({ handling, todo, deleteItemHandler }) {
+function Todo({ handling, todo }) {
   const [isChecked, setIsChecked] = useState(todo.completed);
   const dispatch = useDispatch();
 
@@ -14,13 +14,15 @@ function Todo({ handling, todo, deleteItemHandler }) {
   };
 
   const deleteTodoHandler = async () => {
-    dispatch({ type: "CHANGE_ID", payload: { id: todo.id } });
     await axios.delete(`http://localhost:9090/todos/${todo.id}`);
-    deleteItemHandler();
+    dispatch({ type: "RELOAD" });
   };
 
   const changeCompletedHandler = async () => {
-    await axios.put(`http://localhost:9090/todos/${todo.id}`);
+    await axios.put(`http://localhost:9090/todos/${todo.id}`, {
+      ...todo,
+      completed: !isChecked,
+    });
     dispatch({ type: "PUT_CHECK", payload: todo });
   };
 
@@ -33,13 +35,14 @@ function Todo({ handling, todo, deleteItemHandler }) {
               type="checkbox"
               value={isChecked}
               onChange={changeCompletedHandler}
+              defaultChecked={isChecked}
             />
           </label>
         </div>
       </td>
       <td>{todo.name}</td>
-      <td>Cell B</td>
-      <td>Cell B</td>
+      <td>{todo.priority}</td>
+      <td>{todo.date ? todo.date.substring(0, 10) : "No due date"}</td>
       <td className="action-icons">
         <img
           className="edit-icon"
