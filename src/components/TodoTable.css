@@ -22,3 +22,16 @@ td {
   width: 25px;
   cursor: pointer;
 }
+
+th:nth-child(3) {
+  cursor: pointer;
+}
+
+.todos-pagination {
+  margin-top: 15px;
+}
+
+.todos-pages span {
+  padding: 0 10px;
+  cursor: pointer;
+}

@@ -25,7 +25,6 @@ function Todo({ handling, todo }) {
     });
     dispatch({ type: "PUT_CHECK", payload: todo });
   };
-
   return (
     <tr>
       <td className="checkbox-wrap">
@@ -42,7 +41,7 @@ function Todo({ handling, todo }) {
       </td>
       <td>{todo.name}</td>
       <td>{todo.priority}</td>
-      <td>{todo.date ? todo.date.substring(0, 10) : "No due date"}</td>
+      <td>{todo.dueDate ? todo.dueDate.substring(0, 10) : "No due date"}</td>
       <td className="action-icons">
         <img
           className="edit-icon"

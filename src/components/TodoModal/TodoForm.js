@@ -4,7 +4,7 @@ import axios from "axios";
 
 function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
   const [inputValue, setInputValue] = useState("");
-  const [priority, setPriority] = useState("High");
+  const [priority, setPriority] = useState(1);
   const [dueDate, setDueDate] = useState("0000-00-00");
   const [dateInput, setDateInput] = useState(true);
   const [nameIsValid, setNameIsValid] = useState(false);
@@ -12,22 +12,28 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isEditing) setInputValue(todoData.name);
+    if (isEditing) {
+      setInputValue(todoData.name);
+      setPriority(todoData.priority);
+      setDueDate(todoData.dueDate ? todoData.dueDate.substring(0, 10) : "");
+    }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     let start = new Date();
+    let date;
     let createdDate;
     if (dueDate === "0000-00-00") {
-      createdDate = "";
+      date = "";
     } else {
-      createdDate = `${dueDate} ${start.getHours()}:${start.getMinutes()}:${start.getSeconds()}`;
+      date = `${dueDate}T${start.getHours()}:${start.getMinutes()}:${start.getSeconds()}.00`;
     }
+    console.log(date);
     const data = {
       name: inputValue.trim(),
       priority: priority,
-      date: createdDate,
+      dueDate: date,
       completed: false,
     };
 
@@ -50,10 +56,7 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
 
   const handleNameChange = (e) => {
     const name = e.target.value;
-    let start = new Date();
-    console.log(
-      `${dueDate} ${start.getHours()}:${start.getMinutes()}:${start.getSeconds()}`
-    );
+
     if (name.trim().length > 1 && name.length < 120 && nameFocus) {
       setNameIsValid(true);
     } else {
@@ -89,6 +92,7 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
               onChange={(e) => {
                 setPriority(e.target.value);
               }}
+              value={priority}
             >
               <option value={1}>High</option>
               <option value={2}>Medium</option>
