@@ -20,6 +20,18 @@ function Filter() {
     });
   };
 
+  const clearFilterHandler = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "SET_PAGE_OFFSET",
+      payload: { data: 0 },
+    });
+    dispatch({
+      type: "SET_FILTER",
+      payload: ["NoF", "NoF", "NoF"],
+    });
+  };
+
   const nameFilterHandler = (e) => {
     setName(e.target.value);
   };
@@ -65,9 +77,12 @@ function Filter() {
               </select>
             </div>
           </div>
-          <div className="todo-filter-button">
+          <div className="todo-filter-buttons">
             <button type="submit" onClick={submitFilterHandler}>
               Search
+            </button>
+            <button type="submit" onClick={clearFilterHandler}>
+              Clear Filters
             </button>
           </div>
         </div>
