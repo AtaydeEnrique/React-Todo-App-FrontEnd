@@ -19,10 +19,20 @@ function Todo({ handling, todo }) {
   };
 
   const changeCompletedHandler = async () => {
-    await axios.put(`http://localhost:9090/todos/${todo.id}`, {
-      ...todo,
-      completed: !isChecked,
-    });
+    setIsChecked(!isChecked);
+    if (isChecked) {
+      // Request to set todo as completed
+      await axios.put(`http://localhost:9090/todos/${todo.id}/undone`, {
+        ...todo,
+        completed: isChecked,
+      });
+    } else {
+      // Request to set todo as completed
+      await axios.put(`http://localhost:9090/todos/${todo.id}/done`, {
+        ...todo,
+        completed: isChecked,
+      });
+    }
     dispatch({ type: "PUT_CHECK", payload: todo });
   };
   return (

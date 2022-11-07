@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import "./Filter.css";
-function Filter({ handleFiltering }) {
+function Filter() {
   const [name, setName] = useState("");
   const [priority, setPriority] = useState("NoF");
   const [completed, setCompleted] = useState("NoF");
@@ -10,7 +10,10 @@ function Filter({ handleFiltering }) {
 
   const submitFilterHandler = (e) => {
     e.preventDefault();
-    handleFiltering();
+    dispatch({
+      type: "SET_PAGE_OFFSET",
+      payload: { data: 0 },
+    });
     dispatch({
       type: "SET_FILTER",
       payload: [name.length === 0 ? "NoF" : name, priority, completed],

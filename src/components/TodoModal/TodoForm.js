@@ -24,7 +24,7 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
     let start = new Date();
     let date;
     let createdDate;
-    if (dueDate === "0000-00-00") {
+    if (dueDate === "0000-00-00" || dueDate === "") {
       date = "";
     } else {
       date = `${dueDate}T${

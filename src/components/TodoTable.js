@@ -5,15 +5,15 @@ import axios from "axios";
 import Todo from "./Todo";
 import "./TodoTable.css";
 
-function TodoTable({ handling, filtered }) {
+function TodoTable({ handling }) {
   const [sortBy, setSortBy] = useState("null");
   const [sortDirection, setDirection] = useState("");
-  const [currPage, setCurrPage] = useState(0);
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.data);
   const reload = useSelector((state) => state.reload);
   const filter = useSelector((state) => state.filter);
   const info = useSelector((state) => state.info);
+  const offset = useSelector((state) => state.offset);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,19 +21,14 @@ function TodoTable({ handling, filtered }) {
       const response = await axios.get(
         `http://localhost:9090/todos?sortBy=${sortBy}&filterBy=${
           filter.length === 0 ? ",," : filter.join(",")
-        }&direction=${sortDirection}&offset=${currPage}`
+        }&direction=${sortDirection}&offset=${offset}`
       );
-
       dispatch({ type: "GET", payload: { data: response.data[0] } });
       dispatch({ type: "GET_INFO", payload: { data: response.data[1] } });
     };
 
     fetchData();
-  }, [dispatch, reload, filter, currPage, sortBy, sortDirection]);
-
-  useEffect(() => {
-    setCurrPage(0);
-  }, [filtered]);
+  }, [dispatch, reload, filter, offset, sortBy, sortDirection]);
 
   return (
     <>
@@ -103,7 +98,10 @@ function TodoTable({ handling, filtered }) {
               {[...Array(info.totalPages).keys()].map((page) => (
                 <span
                   onClick={() => {
-                    setCurrPage(page);
+                    dispatch({
+                      type: "SET_PAGE_OFFSET",
+                      payload: { data: page },
+                    });
                   }}
                   key={page}
                 >
