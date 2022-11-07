@@ -34,6 +34,7 @@ function Todo({ handling, todo }) {
       });
     }
     dispatch({ type: "PUT_CHECK", payload: todo });
+    dispatch({ type: "RELOAD" });
   };
   return (
     <tr>

@@ -38,3 +38,11 @@ th:nth-child(4) {
   padding: 0 10px;
   cursor: pointer;
 }
+
+.tasks-time-table {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  border: solid;
+  padding: 10px;
+}

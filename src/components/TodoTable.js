@@ -29,7 +29,6 @@ function TodoTable({ handling }) {
 
     fetchData();
   }, [dispatch, reload, filter, offset, sortBy, sortDirection]);
-
   return (
     <>
       {todos?.length > 0 ? (
@@ -110,6 +109,29 @@ function TodoTable({ handling }) {
               ))}
             </div>
             <div>Total todos: {info.totalTodos}</div> {/* Total Pages */}
+          </div>
+          <div className="tasks-time-table">
+            <div className="time-table-component">
+              <h3>Average time to finish tasks</h3>
+              <div>
+                <p>
+                  High: {(info.averages.totalAv.toFixed(2) / 60).toFixed(2)}{" "}
+                  Minutes
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3>Average time to finish tasks by priority</h3>
+              <div>
+                <p>High: {(info.averages.hiAv / 60).toFixed(2)} Minutes</p>
+              </div>
+              <div>
+                <p>Medium: {(info.averages.medAv / 60).toFixed(2)} Minutes</p>
+              </div>
+              <div>
+                <p>Low: {(info.averages.lowAv / 60).toFixed(2)} Minutes</p>
+              </div>
+            </div>
           </div>
         </>
       ) : (
