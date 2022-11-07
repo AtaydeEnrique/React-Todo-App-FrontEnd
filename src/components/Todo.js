@@ -40,7 +40,13 @@ function Todo({ handling, todo }) {
         </div>
       </td>
       <td>{todo.name}</td>
-      <td>{todo.priority}</td>
+      <td>
+        {todo.priority === 1
+          ? "High"
+          : todo.priority === 2
+          ? "Medium"
+          : todo.priority === 3 && "Low"}
+      </td>
       <td>{todo.dueDate ? todo.dueDate.substring(0, 10) : "No due date"}</td>
       <td className="action-icons">
         <img

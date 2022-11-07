@@ -5,7 +5,7 @@ import axios from "axios";
 import Todo from "./Todo";
 import "./TodoTable.css";
 
-function TodoTable({ handling }) {
+function TodoTable({ handling, filtered }) {
   const [sortBy, setSortBy] = useState("null");
   const [sortDirection, setDirection] = useState("");
   const [currPage, setCurrPage] = useState(0);
@@ -14,6 +14,7 @@ function TodoTable({ handling }) {
   const reload = useSelector((state) => state.reload);
   const filter = useSelector((state) => state.filter);
   const info = useSelector((state) => state.info);
+
   useEffect(() => {
     const fetchData = async () => {
       // CORS, Cross Origin Resource Sharing
@@ -22,24 +23,18 @@ function TodoTable({ handling }) {
           filter.length === 0 ? ",," : filter.join(",")
         }&direction=${sortDirection}&offset=${currPage}`
       );
-      dispatch({ type: "GET", payload: { data: response } });
-      // const infoResponse = await axios.get("http://localhost:9090/todos");
-      // dispatch({ type: "GET_INFO", payload: { data: infoResponse } });
-      // console.log(infoResponse);
+
+      dispatch({ type: "GET", payload: { data: response.data[0] } });
+      dispatch({ type: "GET_INFO", payload: { data: response.data[1] } });
     };
 
     fetchData();
   }, [dispatch, reload, filter, currPage, sortBy, sortDirection]);
 
   useEffect(() => {
-    // const paginationHandler = async () => {
-    //   const response = await axios.get(
-    //     `http://localhost:9090/todos?sortBy=${sortBy}&direction=${sortDirection}&offset=${currPage}`
-    //   );
-    //   dispatch({ type: "GET", payload: { data: response } });
-    // };
-    // paginationHandler();
-  }, []);
+    setCurrPage(0);
+  }, [filtered]);
+
   return (
     <>
       {todos?.length > 0 ? (
@@ -105,7 +100,7 @@ function TodoTable({ handling }) {
           <div className="todos-pagination">
             <div className="todos-pages">
               {/* Pagination */}
-              {[...Array(2).keys()].map((page) => (
+              {[...Array(info.totalPages).keys()].map((page) => (
                 <span
                   onClick={() => {
                     setCurrPage(page);
@@ -116,7 +111,7 @@ function TodoTable({ handling }) {
                 </span>
               ))}
             </div>
-            <div>Total todos: 5</div> {/* Total Pages */}
+            <div>Total todos: {info.totalTodos}</div> {/* Total Pages */}
           </div>
         </>
       ) : (

@@ -8,6 +8,7 @@ function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingData, setEditingData] = useState({});
   const [newTodo, setNewTodo] = useState(false);
+  const [offset, setOffset] = useState(false);
 
   const handleEdit = (todo) => {
     if (!isEditing) {
@@ -18,6 +19,10 @@ function App() {
 
   const handleNew = () => {
     setNewTodo((event) => !event);
+  };
+
+  const handleFiltering = () => {
+    setOffset((event) => !event);
   };
 
   return (
@@ -35,11 +40,11 @@ function App() {
           <h1>To do List</h1>
         </div>
         <div>
-          <Filter />
+          <Filter handleFiltering={handleFiltering} />
           <div className="new-todo-wrapper">
             <button onClick={() => setNewTodo((s) => !s)}>+ New ToDo</button>
           </div>
-          <TodoTable handling={handleEdit} />
+          <TodoTable filtered={offset} handling={handleEdit} />
         </div>
       </div>
     </>
