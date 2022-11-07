@@ -10,8 +10,8 @@ td {
   margin: auto;
   margin-top: 20px;
 }
-.todo-table {
-}
+/* .todo-table {
+} */
 .action-icons {
   display: flex;
   justify-content: space-around;
@@ -24,6 +24,9 @@ td {
 }
 
 th:nth-child(3) {
+  cursor: pointer;
+}
+th:nth-child(4) {
   cursor: pointer;
 }
 

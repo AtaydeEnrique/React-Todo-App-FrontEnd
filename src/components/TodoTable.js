@@ -7,28 +7,29 @@ import "./TodoTable.css";
 
 function TodoTable({ handling }) {
   const [sortBy, setSortBy] = useState("null");
-  const [sortDirection, setDirection] = useState("asc");
+  const [sortDirection, setDirection] = useState("");
   const [currPage, setCurrPage] = useState(0);
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.data);
   const reload = useSelector((state) => state.reload);
   const filter = useSelector((state) => state.filter);
   const info = useSelector((state) => state.info);
-
   useEffect(() => {
     const fetchData = async () => {
       // CORS, Cross Origin Resource Sharing
-      const response = await axios.get("http://localhost:9090/todos");
-      // console.log(response);
-
+      const response = await axios.get(
+        `http://localhost:9090/todos?sortBy=${sortBy}&filterBy=${
+          filter.length === 0 ? ",," : filter.join(",")
+        }&direction=${sortDirection}&offset=${currPage}`
+      );
       dispatch({ type: "GET", payload: { data: response } });
-      const infoResponse = await axios.get("http://localhost:9090/todos");
-      dispatch({ type: "GET_INFO", payload: { data: infoResponse } });
+      // const infoResponse = await axios.get("http://localhost:9090/todos");
+      // dispatch({ type: "GET_INFO", payload: { data: infoResponse } });
       // console.log(infoResponse);
     };
 
     fetchData();
-  }, [dispatch, reload, filter]);
+  }, [dispatch, reload, filter, currPage, sortBy, sortDirection]);
 
   useEffect(() => {
     // const paginationHandler = async () => {
@@ -38,7 +39,7 @@ function TodoTable({ handling }) {
     //   dispatch({ type: "GET", payload: { data: response } });
     // };
     // paginationHandler();
-  }, [currPage, sortBy, sortDirection]);
+  }, []);
   return (
     <>
       {todos?.length > 0 ? (
@@ -74,8 +75,23 @@ function TodoTable({ handling }) {
                   </span>
                 </th>
                 <th>
-                  Due Date <span>&lt;</span>
-                  <span>&gt;</span>
+                  Due Date{" "}
+                  <span
+                    onClick={() => {
+                      setSortBy("date");
+                      setDirection("desc");
+                    }}
+                  >
+                    &lt;
+                  </span>
+                  <span
+                    onClick={() => {
+                      setSortBy("date");
+                      setDirection("asc");
+                    }}
+                  >
+                    &gt;
+                  </span>
                 </th>
                 <th>Actions</th>
               </tr>

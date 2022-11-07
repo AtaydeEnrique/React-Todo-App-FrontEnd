@@ -27,7 +27,11 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
     if (dueDate === "0000-00-00") {
       date = "";
     } else {
-      date = `${dueDate}T${start.getHours()}:${start.getMinutes()}:${start.getSeconds()}.00`;
+      date = `${dueDate}T${
+        (start.getHours() < 10 ? "0" : "") + start.getHours()
+      }:${(start.getMinutes() < 10 ? "0" : "") + start.getMinutes()}:${
+        (start.getSeconds() < 10 ? "0" : "") + start.getSeconds()
+      }.00`;
     }
     console.log(date);
     const data = {
