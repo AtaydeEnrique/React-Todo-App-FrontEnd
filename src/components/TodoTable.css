@@ -10,8 +10,8 @@ td {
   margin: auto;
   margin-top: 20px;
 }
-.todo-table {
-}
+/* .todo-table {
+} */
 .action-icons {
   display: flex;
   justify-content: space-around;
@@ -21,4 +21,28 @@ td {
 .delete-icon {
   width: 25px;
   cursor: pointer;
+}
+
+th:nth-child(3) {
+  cursor: pointer;
+}
+th:nth-child(4) {
+  cursor: pointer;
+}
+
+.todos-pagination {
+  margin-top: 15px;
+}
+
+.todos-pages span {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.tasks-time-table {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  border: solid;
+  padding: 10px;
 }

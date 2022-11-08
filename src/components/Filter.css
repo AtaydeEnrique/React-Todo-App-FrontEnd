@@ -53,9 +53,14 @@
   width: 100%;
 }
 
-.todo-filter-button {
+.todo-filter-buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   width: 50%;
+}
+
+.todo-filter-buttons button:first-child {
+  margin-bottom: 10px;
 }

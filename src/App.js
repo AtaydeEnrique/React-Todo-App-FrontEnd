@@ -6,18 +6,29 @@ import TodoModal from "./components/TodoModal/TodoModal";
 
 function App() {
   const [isEditing, setIsEditing] = useState(false);
+  const [editingData, setEditingData] = useState({});
   const [newTodo, setNewTodo] = useState(false);
 
-  const handleEdit = () => {
+  const handleEdit = (todo) => {
+    if (!isEditing) {
+      setEditingData(todo);
+    }
     setIsEditing((event) => !event);
   };
+
   const handleNew = () => {
     setNewTodo((event) => !event);
   };
 
   return (
     <>
-      {isEditing && <TodoModal isEditing={isEditing} handleEdit={handleEdit} />}
+      {isEditing && (
+        <TodoModal
+          isEditing={isEditing}
+          handleEdit={handleEdit}
+          data={editingData}
+        />
+      )}
       {newTodo && <TodoModal newTodo={newTodo} handleNew={handleNew} />}
       <div className="App">
         <div>
