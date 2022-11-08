@@ -23,7 +23,6 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
     e.preventDefault();
     let start = new Date();
     let date;
-    let createdDate;
     if (dueDate === "0000-00-00" || dueDate === "") {
       date = "";
     } else {
@@ -55,6 +54,8 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
       await axios.put(`http://localhost:9090/todos/${todoData.id}`, data);
       dispatch({ type: "PUT_INFO", payload: { data: data, id: todoData.id } });
       handleEdit();
+      dispatch({ type: "RELOAD" });
+
     }
   };
 
