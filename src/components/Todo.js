@@ -37,44 +37,62 @@ function Todo({ handling, todo }) {
     dispatch({ type: "RELOAD" });
   };
   return (
-    <tr>
-      <td className="checkbox-wrap">
-        <div className="todo-checkbox">
-          <label>
-            <input
-              type="checkbox"
-              value={isChecked}
-              onChange={changeCompletedHandler}
-              defaultChecked={isChecked}
-            />
-          </label>
+    <>
+      <div className="individual-todo sticky taped">
+        <div className="individual-todo-header">
+          <h3>{todo.name}</h3>
+          <p>
+            {todo.priority === 1
+              ? "High"
+              : todo.priority === 2
+              ? "Medium"
+              : todo.priority === 3 && "Low"}
+          </p>
         </div>
-      </td>
-      <td>{todo.name}</td>
-      <td>
-        {todo.priority === 1
-          ? "High"
-          : todo.priority === 2
-          ? "Medium"
-          : todo.priority === 3 && "Low"}
-      </td>
-      <td>{todo.dueDate ? todo.dueDate.substring(0, 10) : "No due date"}</td>
-      <td className="action-icons">
-        <img
-          className="edit-icon"
-          src={editIcon}
-          alt="edit"
-          onClick={closeEditModalHandler}
-        />
-        <p>/</p>
-        <img
-          className="delete-icon"
-          src={deleteIcon}
-          alt="delete"
-          onClick={deleteTodoHandler}
-        />
-      </td>
-    </tr>
+        <div className="individual-todo-body">
+          <div className="individual-todo-info">
+            <p>
+              {todo.dueDate
+                ? "Due to: " + todo.dueDate.substring(0, 10)
+                : "No due date"}
+            </p>
+
+            <p>
+              {todo.completedDate
+                ? "Date of completion: " + todo.completedDate.substring(0, 10)
+                : "Not completed yet"}
+            </p>
+          </div>
+          <div className="individual-todo-completed">
+            <div className="todo-checkbox">
+              <label>
+                <input
+                  type="checkbox"
+                  value={isChecked}
+                  onChange={changeCompletedHandler}
+                  defaultChecked={isChecked}
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="individual-todo-actions">
+          <img
+            className="edit-icon"
+            src={editIcon}
+            alt="edit"
+            onClick={closeEditModalHandler}
+          />
+          <p>/</p>
+          <img
+            className="delete-icon"
+            src={deleteIcon}
+            alt="delete"
+            onClick={deleteTodoHandler}
+          />
+        </div>
+      </div>
+    </>
   );
 }
 

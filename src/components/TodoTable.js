@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
 import Todo from "./Todo";
+
+import leftArrow from "../assets/icons/left_arrow.svg";
+import rightArrow from "../assets/icons/right_arrow.svg";
 import "./TodoTable.css";
 
 function TodoTable({ handling }) {
@@ -33,64 +35,51 @@ function TodoTable({ handling }) {
     <>
       {todos?.length > 0 ? (
         <>
-          <table className="todo-table">
-            <thead>
-              <tr>
-                <th>
-                  <div className="todo-checkbox">
-                    <label>
-                      <input type="checkbox" name="" />
-                    </label>
-                  </div>
-                </th>
-                <th>Name</th>
-                <th>
-                  Priority
-                  <span
-                    onClick={() => {
-                      setSortBy("priority");
-                      setDirection("desc");
-                    }}
-                  >
-                    &lt;
-                  </span>
-                  <span
-                    onClick={() => {
-                      setSortBy("priority");
-                      setDirection("asc");
-                    }}
-                  >
-                    &gt;
-                  </span>
-                </th>
-                <th>
-                  Due Date{" "}
-                  <span
-                    onClick={() => {
-                      setSortBy("date");
-                      setDirection("desc");
-                    }}
-                  >
-                    &lt;
-                  </span>
-                  <span
-                    onClick={() => {
-                      setSortBy("date");
-                      setDirection("asc");
-                    }}
-                  >
-                    &gt;
-                  </span>
-                </th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {todos?.map((todo) => (
-                <Todo key={todo.id} handling={handling} todo={todo} />
-              ))}
-            </tbody>
-          </table>
+          <div className="todo-sorting-wrap">
+            <div className="todo-sort-component">
+              <p>Priority</p>
+              <div className="sort-component-arrows">
+                <img
+                  src={leftArrow}
+                  onClick={() => {
+                    setSortBy("priority");
+                    setDirection("desc");
+                  }}
+                />
+                <img
+                  src={rightArrow}
+                  onClick={() => {
+                    setSortBy("priority");
+                    setDirection("asc");
+                  }}
+                />
+              </div>
+            </div>
+            <div className="todo-sort-component">
+              <p>Due Date</p>
+              <div className="sort-component-arrows">
+                <img
+                  src={leftArrow}
+                  onClick={() => {
+                    setSortBy("date");
+                    setDirection("asc");
+                  }}
+                />
+                <img
+                  src={rightArrow}
+                  onClick={() => {
+                    setSortBy("date");
+                    setDirection("desc");
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="todos-wrap">
+            {todos?.map((todo) => (
+              <Todo key={todo.id} handling={handling} todo={todo} />
+            ))}
+          </div>
           <div className="todos-pagination">
             <div className="todos-pages">
               {/* Pagination */}
@@ -115,8 +104,7 @@ function TodoTable({ handling }) {
               <h3>Average time to finish tasks</h3>
               <div>
                 <p>
-                  High: {(info.averages.totalAv.toFixed(2) / 60).toFixed(2)}{" "}
-                  Minutes
+                  {(info.averages.totalAv.toFixed(2) / 60).toFixed(2)} Minutes
                 </p>
               </div>
             </div>
