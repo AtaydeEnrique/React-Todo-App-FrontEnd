@@ -1,40 +1,63 @@
-.App {
+.app-title {
+  background-color: white;
+  border: solid thin transparent;
+  box-shadow: 0px 0px 10px #ccc;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+}
+.todos-app {
   text-align: center;
   width: 90%;
   margin: auto;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.controls-button {
+  width: 25px;
+  cursor: pointer;
+  transition: 0.5s all;
+}
+.controls-button:hover {
+  width: 30px;
+}
+.controls-button.clicked {
+  width: 25px;
+  cursor: pointer;
+  transition: 0.5s all;
+  transform: rotate(180deg);
+}
+.controls-button.clicked:hover {
+  width: 30px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.todos-list-controls.cs-open {
+  height: fit-content;
+  opacity: 1;
+  z-index: -1;
+  animation: controls-enter 0.5s linear;
+}
+
+.todos-list-controls.cs-open.exiting {
+  opacity: 0;
+  animation: controls-exit 0.5s linear;
+  overflow: hidden;
+}
+
+@keyframes controls-enter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@keyframes controls-exit {
+  0% {
+    opacity: 100%;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 0;
   }
 }
