@@ -1,6 +1,7 @@
 .todos-pagination {
   border: solid thin transparent;
   padding: 20px;
+  padding-top: 5px;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0px 5px 5px #ccc;
@@ -12,12 +13,12 @@
   align-items: center;
   justify-content: center;
 }
+.todos-pagination.pagination1 {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
 .todos-pagination.pagination2 {
   margin-top: 50px;
-}
-.todos-pagination.pagination1 {
-  margin-top: 0px;
-  margin-bottom: 20px;
 }
 
 .todos-total {

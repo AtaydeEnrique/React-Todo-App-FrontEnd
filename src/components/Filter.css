@@ -3,7 +3,10 @@
   flex-direction: column;
   max-width: 100%;
   margin: auto;
-  border: thin black solid;
+  background-color: white;
+  border: solid thin transparent;
+  box-shadow: 0px 5px 5px #ccc;
+  border-radius: 5px;
 }
 .todo-filter-section form {
   margin: 10px 0;
@@ -21,6 +24,9 @@
 .todo-name-filter input {
   display: block;
   width: 100%;
+  border: thin #ccc solid;
+  padding: 10px;
+  border-radius: 20px;
 }
 
 .todo-filter-wrapper {
@@ -38,8 +44,12 @@
   margin: 0;
   margin-right: 10px;
 }
-.todo-prio-filter select {
+.todo-prio-filter select,
+.todo-state-filter select {
   width: 100%;
+  border: thin #ccc solid;
+  padding: 10px;
+  border-radius: 15px;
 }
 .todo-state-filter {
   display: flex;
@@ -49,9 +59,6 @@
   margin: 0;
   margin-right: 25px;
 }
-.todo-state-filter select {
-  width: 100%;
-}
 
 .todo-filter-buttons {
   display: flex;
@@ -59,6 +66,21 @@
   justify-content: center;
   flex-direction: column;
   width: 50%;
+}
+.todo-filter-buttons button {
+  background-color: white;
+  border: solid thin transparent;
+  box-shadow: 0px 5px 5px #ccc;
+  cursor: pointer;
+  padding: 6px;
+  font-weight: bolder;
+  transition: all 0.5s;
+  border-radius: 5px;
+}
+
+.todo-filter-buttons button:hover {
+  background-color: black;
+  color: white;
 }
 
 .todo-filter-buttons button:first-child {

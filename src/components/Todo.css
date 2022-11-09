@@ -51,6 +51,7 @@ label {
   background-color: white;
   border: solid thin transparent;
   box-shadow: 0px 5px 5px #ccc;
+  animation: post-it 0.5s linear;
 }
 
 .individual-todo-header {
@@ -66,15 +67,8 @@ label {
 .header-prio {
   padding: 5px;
   border-radius: 25px;
-}
-.header-prio.header-High {
-  background-color: rgba(255, 0, 0, 0.45);
-}
-.header-prio.header-Medium {
-  background-color: rgba(72, 99, 255, 0.45);
-}
-.header-prio.header-Low {
-  background-color: rgba(87, 255, 72, 0.45);
+  font-size: smaller;
+  background-color: rgba(71, 87, 107, 0.15);
 }
 
 .individual-todo-header h3 {
@@ -221,5 +215,17 @@ label {
   .individual-todo {
     min-width: 90%;
     width: 60%;
+  }
+}
+
+@keyframes post-it {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) translateX(100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px) translateX(0px);
   }
 }

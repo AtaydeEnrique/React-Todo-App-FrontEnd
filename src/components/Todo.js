@@ -74,7 +74,9 @@ function Todo({ handling, todo }) {
           <h3 className={isChecked ? "header-text-done" : "header-text-undone"}>
             {todo.name}
           </h3>
-          <p className={"header-prio header-" + todoPriority}>{todoPriority}</p>
+          <p className={"header-prio header-" + todoPriority}>
+            {todoPriority} Priority
+          </p>
         </div>
         <div className="individual-todo-body">
           <div className="individual-todo-info">

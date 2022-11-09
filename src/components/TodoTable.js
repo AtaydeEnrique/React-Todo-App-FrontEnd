@@ -121,7 +121,10 @@ function TodoTable({ handling }) {
           </div>
         </>
       ) : (
-        <div>No data available</div>
+        <div className="todos-nodata">
+          <h1>No data available</h1>
+          <p>Open controls to start adding data!</p>
+        </div>
       )}
     </>
   );
