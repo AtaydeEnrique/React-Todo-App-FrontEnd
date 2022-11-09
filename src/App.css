@@ -18,10 +18,17 @@
   cursor: pointer;
   transition: 0.5s all;
 }
+.controls-button:hover {
+  width: 30px;
+}
 .controls-button.clicked {
   width: 25px;
   cursor: pointer;
+  transition: 0.5s all;
   transform: rotate(180deg);
+}
+.controls-button.clicked:hover {
+  width: 30px;
 }
 
 .todos-list-controls.cs-open {

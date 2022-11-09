@@ -93,11 +93,11 @@ label {
   padding: 20px;
 }
 .todo-info-time-left-green {
-  background-color: rgba(0, 255, 0, 0.3);
+  background-color: rgba(89, 255, 89, 0.3);
   border-radius: 10px;
 }
 .todo-info-time-left-yellow {
-  background-color: rgba(128, 119, 0, 0.3);
+  background-color: rgba(202, 206, 0, 0.3);
   border-radius: 10px;
 }
 .todo-info-time-left-red {

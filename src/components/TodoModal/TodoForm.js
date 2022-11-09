@@ -9,11 +9,13 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
   const [dateInput, setDateInput] = useState(true);
   const [nameIsValid, setNameIsValid] = useState(false);
   const [nameFocus, setNameFocus] = useState(false);
+  const [nameChanged, setNameChanged] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isEditing) {
       setInputValue(todoData.name);
+      setNameIsValid(true);
       setPriority(todoData.priority);
       setDueDate(todoData.dueDate ? todoData.dueDate.substring(0, 10) : "");
     }
@@ -55,14 +57,13 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
       dispatch({ type: "PUT_INFO", payload: { data: data, id: todoData.id } });
       handleEdit();
       dispatch({ type: "RELOAD" });
-
     }
   };
 
   const handleNameChange = (e) => {
     const name = e.target.value;
-
-    if (name.trim().length > 1 && name.length < 120 && nameFocus) {
+    setNameChanged(true);
+    if (name.trim().length >= 1 && name.length < 120 && nameFocus) {
       setNameIsValid(true);
     } else {
       setNameIsValid(false);
@@ -70,25 +71,30 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
     setInputValue(name);
   };
 
-  const setRequired = nameFocus === true && nameIsValid === false;
-
+  const setRequired = nameChanged && nameFocus && nameIsValid === false;
+  const validInputs = nameIsValid === true;
   return (
     <div className="todo-form">
       <form>
         <div className="todo-section">
-          <div className="todo-input">
+          <div className={`todo-input ${setRequired ? "invalid-input" : ""}`}>
             <label htmlFor="newtodo-name">Name</label>
+
             <input
               type="text"
               value={inputValue}
               onChange={handleNameChange}
-              onBlur={() => setNameFocus(true)}
+              onFocus={() => {
+                setNameFocus(true);
+              }}
               placeholder="Activity"
               name="name"
               id="name"
             />
-            {!setRequired ? null : <span>Required</span>}
           </div>
+          {!setRequired ? null : (
+            <span>Input a name between 1 and 120 characters</span>
+          )}
         </div>
         <div className="todo-section">
           <div className="todo-input">
@@ -105,11 +111,12 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
             </select>
           </div>
           <div className="todo-input">
-            <label htmlFor="todo-date">Due Date</label>
+            <label htmlFor="todo-date">Due Date{dateInput && "?"}</label>
             <input
               type="checkbox"
               onClick={() => {
                 setDateInput(!dateInput);
+                !dateInput && setDueDate("0000-00-00");
               }}
             />
             <input
@@ -122,8 +129,14 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
               disabled={dateInput}
             />
           </div>
-          <div className="form-btns">
-            <button onClick={handleSubmit}>Submit</button>
+          <div className={`form-btns ${!validInputs ? "disabled" : ""}`}>
+            {!validInputs === true && (
+              <p className="small-text">Fill all inputs to submit!</p>
+            )}
+
+            <button onClick={handleSubmit} disabled={!validInputs === true}>
+              Submit
+            </button>
           </div>
         </div>
       </form>

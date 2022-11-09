@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
 import Filter from "./components/Filter";
 import TodoTable from "./components/TodoTable";
@@ -6,6 +7,9 @@ import TodoModal from "./components/TodoModal/TodoModal";
 
 import arrow from "./assets/icons/updown_arrow.svg";
 import "./App.css";
+
+const portalElement = document.querySelector("#modal");
+
 function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingData, setEditingData] = useState({});
@@ -34,18 +38,24 @@ function App() {
 
   return (
     <>
-      {isEditing && (
-        <TodoModal
-          isEditing={isEditing}
-          handleEdit={handleEdit}
-          data={editingData}
-        />
-      )}
-      {newTodo && <TodoModal newTodo={newTodo} handleNew={handleNew} />}
+      {isEditing &&
+        ReactDOM.createPortal(
+          <TodoModal
+            isEditing={isEditing}
+            handleEdit={handleEdit}
+            data={editingData}
+          />,
+          portalElement
+        )}
+      {newTodo &&
+        ReactDOM.createPortal(
+          <TodoModal newTodo={newTodo} handleNew={handleNew} />,
+          portalElement
+        )}
       <div className="App">
         <div className="app-title">
           <h1>Todo App</h1>
-          <p class="small-text">Ricardo Enrique Ortega Atayde</p>
+          <p className="small-text">Ricardo Enrique Ortega Atayde</p>
         </div>
         <div className="todos-app">
           {controlClass && (
@@ -74,7 +84,7 @@ function App() {
             }}
             alt="arrow"
           />
-          <p class="small-text">
+          <p className="small-text">
             Click to {controlClass ? "close" : "open"} controls
           </p>
           <TodoTable handling={handleEdit} />
