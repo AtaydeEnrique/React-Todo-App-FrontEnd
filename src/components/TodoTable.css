@@ -20,6 +20,11 @@ td {
 .delete-icon {
   width: 25px;
   cursor: pointer;
+  transition: 0.5s;
+}
+.edit-icon:hover,
+.delete-icon:hover {
+  width: 30px;
 }
 
 th:nth-child(3) {
