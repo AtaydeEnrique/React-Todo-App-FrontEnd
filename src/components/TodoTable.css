@@ -10,8 +10,7 @@ td {
   margin: auto;
   margin-top: 20px;
 }
-/* .todo-table {
-} */
+
 .action-icons {
   display: flex;
   justify-content: space-around;
@@ -30,30 +29,34 @@ th:nth-child(4) {
   cursor: pointer;
 }
 
-.todos-pagination {
-  margin-top: 50px;
-}
-
-.todos-pages span {
-  padding: 0 10px;
-  cursor: pointer;
-}
-
 .tasks-time-table {
   display: flex;
+  align-items: center;
   justify-content: space-around;
-  margin-top: 50px;
+  margin-top: 30px;
   border: solid;
   padding: 10px;
+  margin-bottom: 25px;
+  background-color: white;
+  border: solid thin transparent;
+  box-shadow: 0px 5px 5px #ccc;
+  border-radius: 5px;
+}
+
+.time-table-component p {
+  padding: 10px 0px;
 }
 
 /*-------------------------------------- */
 .todos-wrap {
   width: 100%;
   margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .todo-sorting-wrap {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
   width: 50%;
@@ -62,6 +65,12 @@ th:nth-child(4) {
   background-color: white;
   border: solid thin transparent;
   box-shadow: 0px 5px 5px #ccc;
+  border-radius: 5px;
+}
+.todo-sorting-body {
+  margin-top: 15px;
+  display: flex;
+  width: 100%;
 }
 
 .todo-sort-component {
@@ -85,4 +94,22 @@ th:nth-child(4) {
 
 .sort-component-arrows img:hover {
   width: 20px;
+}
+
+@media (max-width: 768px) {
+  .todos-wrap {
+    width: 100%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .todos-wrap {
+    width: 100%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }

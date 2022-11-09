@@ -6,6 +6,7 @@ import Todo from "./Todo";
 import leftArrow from "../assets/icons/left_arrow.svg";
 import rightArrow from "../assets/icons/right_arrow.svg";
 import "./TodoTable.css";
+import TodoPagination from "./TodoPagination";
 
 function TodoTable({ handling }) {
   const [sortBy, setSortBy] = useState("null");
@@ -31,47 +32,57 @@ function TodoTable({ handling }) {
 
     fetchData();
   }, [dispatch, reload, filter, offset, sortBy, sortDirection]);
+
   return (
     <>
       {todos?.length > 0 ? (
         <>
+          <TodoPagination
+            totalPages={info.totalPages}
+            totalTodos={info.totalTodos}
+            offset={offset}
+            up={true}
+          />
           <div className="todo-sorting-wrap">
-            <div className="todo-sort-component">
-              <p>Priority</p>
-              <div className="sort-component-arrows">
-                <img
-                  src={leftArrow}
-                  onClick={() => {
-                    setSortBy("priority");
-                    setDirection("desc");
-                  }}
-                />
-                <img
-                  src={rightArrow}
-                  onClick={() => {
-                    setSortBy("priority");
-                    setDirection("asc");
-                  }}
-                />
+            <p>Sort by</p>
+            <div className="todo-sorting-body">
+              <div className="todo-sort-component">
+                <p>Priority</p>
+                <div className="sort-component-arrows">
+                  <img
+                    src={leftArrow}
+                    onClick={() => {
+                      setSortBy("priority");
+                      setDirection("desc");
+                    }}
+                  />
+                  <img
+                    src={rightArrow}
+                    onClick={() => {
+                      setSortBy("priority");
+                      setDirection("asc");
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="todo-sort-component">
-              <p>Due Date</p>
-              <div className="sort-component-arrows">
-                <img
-                  src={leftArrow}
-                  onClick={() => {
-                    setSortBy("date");
-                    setDirection("asc");
-                  }}
-                />
-                <img
-                  src={rightArrow}
-                  onClick={() => {
-                    setSortBy("date");
-                    setDirection("desc");
-                  }}
-                />
+              <div className="todo-sort-component">
+                <p>Due Date</p>
+                <div className="sort-component-arrows">
+                  <img
+                    src={leftArrow}
+                    onClick={() => {
+                      setSortBy("date");
+                      setDirection("asc");
+                    }}
+                  />
+                  <img
+                    src={rightArrow}
+                    onClick={() => {
+                      setSortBy("date");
+                      setDirection("desc");
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -80,25 +91,12 @@ function TodoTable({ handling }) {
               <Todo key={todo.id} handling={handling} todo={todo} />
             ))}
           </div>
-          <div className="todos-pagination">
-            <div className="todos-pages">
-              {/* Pagination */}
-              {[...Array(info.totalPages).keys()].map((page) => (
-                <span
-                  onClick={() => {
-                    dispatch({
-                      type: "SET_PAGE_OFFSET",
-                      payload: { data: page },
-                    });
-                  }}
-                  key={page}
-                >
-                  {page + 1}
-                </span>
-              ))}
-            </div>
-            <div>Total todos: {info.totalTodos}</div> {/* Total Pages */}
-          </div>
+          <TodoPagination
+            totalPages={info.totalPages}
+            totalTodos={info.totalTodos}
+            offset={offset}
+            up={false}
+          />
           <div className="tasks-time-table">
             <div className="time-table-component">
               <h3>Average time to finish tasks</h3>
@@ -108,7 +106,7 @@ function TodoTable({ handling }) {
                 </p>
               </div>
             </div>
-            <div>
+            <div className="time-table-component">
               <h3>Average time to finish tasks by priority</h3>
               <div>
                 <p>High: {(info.averages.hiAv / 60).toFixed(2)} Minutes</p>

@@ -37,7 +37,7 @@ function App() {
         <div>
           <Filter />
           <div className="new-todo-wrapper">
-            <button onClick={() => setNewTodo((s) => !s)}>+ New ToDo</button>
+            <button onClick={() => setNewTodo((s) => !s)}>+ NEW TODO</button>
           </div>
           <TodoTable handling={handleEdit} />
         </div>

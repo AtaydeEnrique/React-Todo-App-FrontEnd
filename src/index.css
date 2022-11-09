@@ -12,6 +12,7 @@ body {
   overflow-x: hidden;
   background: #eee;
   color: #636983;
+  scroll-behavior: smooth;
 }
 
 body {

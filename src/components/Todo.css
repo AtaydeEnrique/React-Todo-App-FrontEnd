@@ -12,6 +12,7 @@ input[type="checkbox"] {
   appearance: none;
   outline: none;
   transition: 0.6s;
+  cursor: pointer;
 }
 
 input[type="checkbox"]:before {
@@ -42,7 +43,7 @@ label {
 }
 
 .individual-todo {
-  min-width: none 80%;
+  min-width: 70%;
   width: 60%;
   padding: 15px;
   margin: auto;
@@ -51,15 +52,31 @@ label {
   border: solid thin transparent;
   box-shadow: 0px 5px 5px #ccc;
 }
-.individual-todo:first-child {
-  margin-top: 45px;
-}
+
 .individual-todo-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: thin solid #b6b575;
 }
+.header-text-done {
+  text-decoration: line-through;
+}
+.header-prio {
+  padding: 5px;
+  border-radius: 25px;
+}
+.header-prio.header-High {
+  background-color: rgba(255, 0, 0, 0.45);
+}
+.header-prio.header-Medium {
+  background-color: rgba(72, 99, 255, 0.45);
+}
+.header-prio.header-Low {
+  background-color: rgba(87, 255, 72, 0.45);
+}
+
 .individual-todo-header h3 {
   width: 80%;
   word-break: break-all;
@@ -81,6 +98,18 @@ label {
 .individual-todo-info p {
   padding: 20px;
 }
+.todo-info-time-left-green {
+  background-color: rgba(0, 255, 0, 0.3);
+  border-radius: 10px;
+}
+.todo-info-time-left-yellow {
+  background-color: rgba(128, 119, 0, 0.3);
+  border-radius: 10px;
+}
+.todo-info-time-left-red {
+  background-color: rgb(128, 0, 0, 0.5);
+  border-radius: 10px;
+}
 .individual-todo-completed {
   width: 20%;
 }
@@ -90,6 +119,10 @@ label {
   justify-content: space-around;
   width: 50%;
   margin: auto;
+  transform: translateY(10px);
+}
+.small-text {
+  font-size: smaller;
 }
 
 /* POST IT! */
@@ -176,3 +209,17 @@ label {
   border-color: #cac982 transparent;
 }
 /* POST IT! */
+
+@media (max-width: 768px) {
+  .individual-todo {
+    min-width: 90%;
+    width: 60%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .individual-todo {
+    min-width: 90%;
+    width: 60%;
+  }
+}
