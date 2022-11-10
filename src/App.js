@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import ReactDOM from "react-dom";
 
 import TodoTable from "./components/TodoTable";
+import TodoModal from "./components/TodoModal/TodoModal";
+import TodoControls from "./components/TodoModal/TodoControls";
 
 import arrow from "./assets/icons/updown_arrow.svg";
 import "./App.css";
-import TodoControls from "./components/TodoModal/TodoControls";
 
+const portalElement = document.querySelector("#modal");
 function App() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingData, setEditingData] = useState({});
   const [controlClass, setControlClass] = useState(false);
   const [controlsExit, setControlsExit] = useState(false);
+  const editTodo = useSelector((state) => state.editTodo);
 
   const controlsViewHandler = () => {
     if (controlClass) {
@@ -26,13 +29,6 @@ function App() {
     }
   };
 
-  const handleEdit = (todo) => {
-    if (!isEditing) {
-      setEditingData(todo);
-    }
-    setIsEditing((event) => !event);
-  };
-
   return (
     <>
       <div className="App">
@@ -42,13 +38,7 @@ function App() {
         </div>
         <div className="todos-app">
           {controlClass && (
-            <TodoControls
-              exiting={controlsExit}
-              openControls={controlClass}
-              isEditing={isEditing}
-              handleEdit={handleEdit}
-              editingData={editingData}
-            />
+            <TodoControls exiting={controlsExit} openControls={controlClass} />
           )}
           <img
             className={`controls-button${controlClass ? " clicked" : ""}`}
@@ -59,9 +49,10 @@ function App() {
           <p className="small-text">
             Click to {controlClass ? "close" : "open"} controls
           </p>
-          <TodoTable handling={handleEdit} />
+          <TodoTable />
         </div>
       </div>
+      {editTodo && ReactDOM.createPortal(<TodoModal />, portalElement)}
     </>
   );
 }

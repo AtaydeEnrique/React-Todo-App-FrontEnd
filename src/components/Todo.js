@@ -5,13 +5,9 @@ import deleteIcon from "../assets/icons/delete.svg";
 import editIcon from "../assets/icons/edit.svg";
 
 import "./Todo.css";
-function Todo({ handling, todo }) {
+function Todo({ todo }) {
   const [isChecked, setIsChecked] = useState(todo.completed);
   const dispatch = useDispatch();
-
-  const closeEditModalHandler = (e) => {
-    handling(todo);
-  };
 
   const deleteTodoHandler = async () => {
     await axios.delete(`http://localhost:9090/todos/${todo.id}`);
@@ -110,7 +106,10 @@ function Todo({ handling, todo }) {
               className="edit-icon"
               src={editIcon}
               alt="edit"
-              onClick={closeEditModalHandler}
+              onClick={() => {
+                dispatch({ type: "EDIT_TODO" });
+                dispatch({ type: "EDIT_DATA", payload: todo });
+              }}
             />
             <p className="small-text">Edit</p>
           </div>

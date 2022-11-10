@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import useHttp from "../hooks/use-http";
+
 import Todo from "./Todo";
+import TodoPagination from "./TodoPagination";
 
 import leftArrow from "../assets/icons/left_arrow.svg";
 import rightArrow from "../assets/icons/right_arrow.svg";
 import "./TodoTable.css";
-import TodoPagination from "./TodoPagination";
 
-function TodoTable({ handling }) {
+function TodoTable() {
   const [sortBy, setSortBy] = useState("null");
   const [sortDirection, setDirection] = useState("");
+  const fetchData = useHttp();
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.data);
   const reload = useSelector((state) => state.reload);
@@ -19,18 +21,20 @@ function TodoTable({ handling }) {
   const offset = useSelector((state) => state.offset);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // CORS, Cross Origin Resource Sharing
-      const response = await axios.get(
-        `http://localhost:9090/todos?sortBy=${sortBy}&filterBy=${
-          filter.length === 0 ? ",," : filter.join(",")
-        }&direction=${sortDirection}&offset=${offset}`
-      );
-      dispatch({ type: "GET", payload: { data: response.data[0] } });
-      dispatch({ type: "GET_INFO", payload: { data: response.data[1] } });
+    const saveData = (data) => {
+      dispatch({ type: "GET", payload: { data: data[0] } });
+      dispatch({ type: "GET_INFO", payload: { data: data[1] } });
     };
-
-    fetchData();
+    try {
+      fetchData(
+        {
+          url: `http://localhost:9090/todos?sortBy=${sortBy}&filterBy=${
+            filter.length === 0 ? ",," : filter.join(",")
+          }&direction=${sortDirection}&offset=${offset}`,
+        },
+        saveData
+      );
+    } catch (e) {}
   }, [dispatch, reload, filter, offset, sortBy, sortDirection]);
 
   return (
@@ -92,7 +96,7 @@ function TodoTable({ handling }) {
           </div>
           <div className="todos-wrap">
             {todos?.map((todo) => (
-              <Todo key={todo.id} handling={handling} todo={todo} />
+              <Todo key={todo.id} todo={todo} />
             ))}
           </div>
           <TodoPagination

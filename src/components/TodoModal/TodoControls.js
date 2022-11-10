@@ -1,23 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Filter from "../Filter";
 import TodoModal from "../TodoModal/TodoModal";
 
 import "./TodoControls.css";
 const portalElement = document.querySelector("#modal");
-function TodoControls({
-  exiting,
-  openControls,
-  isEditing,
-  handleEdit,
-  editingData,
-}) {
-  const [newTodo, setNewTodo] = useState(false);
-
-  const handleNew = () => {
-    setNewTodo((event) => !event);
-  };
+function TodoControls({ exiting, openControls }) {
+  const newTodo = useSelector((state) => state.newTodo);
+  const editTodo = useSelector((state) => state.editTodo);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -27,21 +20,11 @@ function TodoControls({
     >
       <Filter />
       <div className="new-todo-wrapper">
-        <button onClick={() => setNewTodo((s) => !s)}>+ NEW TODO</button>
-        {isEditing &&
-          ReactDOM.createPortal(
-            <TodoModal
-              isEditing={isEditing}
-              handleEdit={handleEdit}
-              data={editingData}
-            />,
-            portalElement
-          )}
+        <button onClick={() => dispatch({ type: "NEW_TODO" })}>
+          + NEW TODO
+        </button>
         {newTodo &&
-          ReactDOM.createPortal(
-            <TodoModal newTodo={newTodo} handleNew={handleNew} />,
-            portalElement
-          )}
+          ReactDOM.createPortal(<TodoModal newTodo={newTodo} />, portalElement)}
       </div>
     </div>
   );

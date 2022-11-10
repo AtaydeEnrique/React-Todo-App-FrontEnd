@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import useHttp from "../../hooks/use-http";
 
 import "./TodoForm.css";
 
-function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
+function TodoForm() {
   const [inputValue, setInputValue] = useState("");
   const [priority, setPriority] = useState(1);
-  const [dueDate, setDueDate] = useState("0000-00-00");
+  const [dueDate, setDueDate] = useState("");
   const [dateInput, setDateInput] = useState(true);
   const [nameIsValid, setNameIsValid] = useState(false);
   const [nameFocus, setNameFocus] = useState(false);
   const [nameChanged, setNameChanged] = useState(false);
+  const isNew = useSelector((state) => state.newTodo);
+  const isEditing = useSelector((state) => state.editTodo);
+  const todoData = useSelector((state) => state.editData);
   const dispatch = useDispatch();
+  const postData = useHttp();
 
   useEffect(() => {
     if (isEditing) {
       setInputValue(todoData.name);
       setNameIsValid(true);
       setPriority(todoData.priority);
-      setDueDate(
-        todoData.dueDate ? todoData.dueDate.substring(0, 10) : "0000-00-00"
-      );
+      setDueDate(todoData.dueDate ? todoData.dueDate.substring(0, 10) : "");
     }
   }, []);
 
@@ -29,7 +31,7 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
     e.preventDefault();
     let start = new Date();
     let date;
-    if (dueDate === "0000-00-00" || dueDate === "") {
+    if (dueDate === "") {
       date = "";
     } else {
       date = `${dueDate}T${
@@ -38,7 +40,6 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
         (start.getSeconds() < 10 ? "0" : "") + start.getSeconds()
       }.00`;
     }
-    console.log(date);
     const data = {
       name: inputValue.trim(),
       priority: priority,
@@ -48,19 +49,34 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
 
     if (isNew) {
       try {
-        await axios.post("http://localhost:9090/todos/", data);
+        postData({
+          url: `http://localhost:9090/todos/`,
+          method: "POST",
+          headers: new Headers({
+            Accept: "application.json",
+            "Content-Type": "application/json",
+          }),
+          body: JSON.stringify(data),
+        });
+        dispatch({ type: "NEW_TODO" });
         dispatch({ type: "RELOAD" });
-        handleNew();
-      } catch (error) {
-        console.log(error.response);
-      }
+      } catch (e) {}
     }
 
     if (isEditing) {
-      await axios.put(`http://localhost:9090/todos/${todoData.id}`, data);
-      dispatch({ type: "PUT_INFO", payload: { data: data, id: todoData.id } });
-      handleEdit();
-      dispatch({ type: "RELOAD" });
+      try {
+        postData({
+          url: `http://localhost:9090/todos/${todoData.id}`,
+          method: "PUT",
+          headers: new Headers({
+            Accept: "application.json",
+            "Content-Type": "application/json",
+          }),
+          body: JSON.stringify(data),
+        });
+        dispatch({ type: "EDIT_TODO" });
+        dispatch({ type: "RELOAD" });
+      } catch (e) {}
     }
   };
 
@@ -122,7 +138,7 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
               type="checkbox"
               onClick={() => {
                 setDateInput(!dateInput);
-                !dateInput && setDueDate("0000-00-00");
+                !dateInput && setDueDate("");
               }}
             />
             <input
