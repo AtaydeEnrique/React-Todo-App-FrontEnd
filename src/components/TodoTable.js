@@ -55,6 +55,7 @@ function TodoTable({ handling }) {
                       setSortBy("priority");
                       setDirection("desc");
                     }}
+                    alt="descending sort arrow"
                   />
                   <img
                     src={rightArrow}
@@ -62,6 +63,7 @@ function TodoTable({ handling }) {
                       setSortBy("priority");
                       setDirection("asc");
                     }}
+                    alt="ascending sort arrow"
                   />
                 </div>
               </div>
@@ -74,6 +76,7 @@ function TodoTable({ handling }) {
                       setSortBy("date");
                       setDirection("asc");
                     }}
+                    alt="descending sort arrow"
                   />
                   <img
                     src={rightArrow}
@@ -81,6 +84,7 @@ function TodoTable({ handling }) {
                       setSortBy("date");
                       setDirection("desc");
                     }}
+                    alt="ascending sort arrow"
                   />
                 </div>
               </div>

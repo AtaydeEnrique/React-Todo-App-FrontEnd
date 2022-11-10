@@ -35,12 +35,12 @@
   height: fit-content;
   opacity: 1;
   z-index: -1;
-  animation: controls-enter 0.5s linear;
+  animation: controls-enter 0.25s linear;
 }
 
 .todos-list-controls.cs-open.exiting {
   opacity: 0;
-  animation: controls-exit 0.5s linear;
+  animation: controls-exit 0.25s linear;
   overflow: hidden;
 }
 
