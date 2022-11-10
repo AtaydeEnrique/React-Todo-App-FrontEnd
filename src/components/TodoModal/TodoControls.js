@@ -9,7 +9,6 @@ import "./TodoControls.css";
 const portalElement = document.querySelector("#modal");
 function TodoControls({ exiting, openControls }) {
   const newTodo = useSelector((state) => state.newTodo);
-  const editTodo = useSelector((state) => state.editTodo);
   const dispatch = useDispatch();
 
   return (

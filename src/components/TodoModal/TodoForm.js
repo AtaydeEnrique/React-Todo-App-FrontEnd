@@ -69,13 +69,15 @@ function TodoForm() {
           url: `http://localhost:9090/todos/${todoData.id}`,
           method: "PUT",
           headers: new Headers({
-            Accept: "application.json",
-            "Content-Type": "application/json",
+            "Content-type": "application/json; charset=UTF-8",
           }),
           body: JSON.stringify(data),
         });
         dispatch({ type: "EDIT_TODO" });
-        dispatch({ type: "RELOAD" });
+        dispatch({
+          type: "PUT_INFO",
+          payload: { data: data, id: todoData.id },
+        });
       } catch (e) {}
     }
   };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import useHttp from "../hooks/use-http";
 import deleteIcon from "../assets/icons/delete.svg";
 import editIcon from "../assets/icons/edit.svg";
 
@@ -8,29 +8,34 @@ import "./Todo.css";
 function Todo({ todo }) {
   const [isChecked, setIsChecked] = useState(todo.completed);
   const dispatch = useDispatch();
+  const updateData = useHttp();
 
   const deleteTodoHandler = async () => {
-    await axios.delete(`http://localhost:9090/todos/${todo.id}`);
+    try {
+      fetch(`http://localhost:9090/todos/${todo.id}`, {
+        method: "DELETE",
+      });
+    } catch (e) {}
     dispatch({ type: "RELOAD" });
   };
 
   const changeCompletedHandler = async () => {
     setIsChecked(!isChecked);
-    if (isChecked) {
-      // Request to set todo as completed
-      await axios.put(`http://localhost:9090/todos/${todo.id}/undone`, {
-        ...todo,
-        completed: isChecked,
+
+    try {
+      updateData({
+        url: `http://localhost:9090/todos/${todo.id}/${
+          isChecked ? "undone" : "done"
+        }`,
+        method: "PUT",
+        headers: new Headers({
+          "Content-type": "application/json; charset=UTF-8",
+        }),
+        body: JSON.stringify({ ...todo, completed: isChecked }),
       });
-    } else {
-      // Request to set todo as completed
-      await axios.put(`http://localhost:9090/todos/${todo.id}/done`, {
-        ...todo,
-        completed: isChecked,
-      });
-    }
-    dispatch({ type: "PUT_CHECK", payload: todo });
-    dispatch({ type: "RELOAD" });
+      dispatch({ type: "PUT_CHECK", payload: todo });
+      dispatch({ type: "RELOAD" });
+    } catch (e) {}
   };
 
   const todoPriority =
@@ -49,11 +54,16 @@ function Todo({ todo }) {
     let day = 1000 * 60 * 60 * 24;
 
     let days = Math.floor(diff / day);
+    if (days > 0) {
+      message += "Time left: ";
+      message += days + " days / ";
+      message += (days / 7).toFixed(2) + " weeks";
 
-    message += "Time left: ";
-    message += days + " days / ";
-    message += (days / 7).toFixed(2) + " weeks";
-    messageClass = days / 7 <= 1 ? "red" : days / 7 <= 2 ? "yellow" : "green";
+      messageClass = days / 7 <= 1 ? "red" : days / 7 <= 2 ? "yellow" : "green";
+    } else {
+      message += "Not completed on time";
+      messageClass = "warning";
+    }
   }
   // Time left calculation --------- END
   const dueDateString = new Date(todo.dueDate).toString().substring(3, 15);
@@ -65,7 +75,11 @@ function Todo({ todo }) {
   }
   return (
     <>
-      <div className="individual-todo sticky taped">
+      <div
+        className={`individual-todo sticky taped ${
+          isChecked ? "completed" : ""
+        }`}
+      >
         <div className="individual-todo-header">
           <h3 className={isChecked ? "header-text-done" : "header-text-undone"}>
             {todo.name}
@@ -83,6 +97,8 @@ function Todo({ todo }) {
             <p>
               {todo.completedDate
                 ? "Date of completion: " + completedDateString
+                : isChecked
+                ? "To-Do Completed!" + completedDateString
                 : "Not completed yet"}
             </p>
           </div>

@@ -104,6 +104,10 @@ label {
   background-color: rgb(128, 0, 0, 0.5);
   border-radius: 10px;
 }
+.todo-info-time-left-warning {
+  background-color: rgba(255, 0, 0, 0.5);
+  border-radius: 10px;
+}
 .individual-todo-completed {
   width: 20%;
 }
@@ -117,6 +121,9 @@ label {
 }
 .small-text {
   font-size: smaller;
+}
+.todo-checkbox > .small-text {
+  margin-bottom: 15px;
 }
 
 /* POST IT! */
@@ -132,6 +139,10 @@ label {
   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
   box-shadow: -5px -5px 5px rgba(0, 0, 0, 0.1);
+}
+.sticky.completed {
+  background-color: #d9ffc5ba;
+  border-color: #bce79cb0;
 }
 
 .individual-todo-header::before {
@@ -193,6 +204,9 @@ label {
   border-style: solid;
   border-color: #f4f39e;
 }
+.sticky.completed:after {
+  border-color: #d9ffc5ba;
+}
 .sticky:before {
   content: "";
   position: absolute;
@@ -201,6 +215,9 @@ label {
   border-width: 2em 2em 0 0;
   border-style: solid;
   border-color: #cac982 transparent;
+}
+.sticky.completed:before {
+  border-color: #bce79cb0 transparent;
 }
 /* POST IT! */
 

@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import TodoForm from "./TodoForm";
 
 import "./TodoModal.css";
-const portalElement = document.querySelector("#modal");
 
 function TodoModal() {
   const newTodo = useSelector((state) => state.newTodo);
   const editTodo = useSelector((state) => state.editTodo);
   const dispatch = useDispatch();
-  if (editTodo) console.log("ESTOY EDITANDO");
-  if (newTodo) console.log("ESTOY NEW");
+
   return (
     <div className="todo-modal">
       <div className="individual-todo sticky taped post-it-modal">
