@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
+import "./TodoForm.css";
+
 function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
   const [inputValue, setInputValue] = useState("");
   const [priority, setPriority] = useState(1);
@@ -17,7 +19,9 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
       setInputValue(todoData.name);
       setNameIsValid(true);
       setPriority(todoData.priority);
-      setDueDate(todoData.dueDate ? todoData.dueDate.substring(0, 10) : "");
+      setDueDate(
+        todoData.dueDate ? todoData.dueDate.substring(0, 10) : "0000-00-00"
+      );
     }
   }, []);
 
@@ -111,7 +115,9 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
             </select>
           </div>
           <div className="todo-input">
-            <label htmlFor="todo-date">Due Date{dateInput && "?"}</label>
+            <label htmlFor="todo-date">
+              {isEditing && "Edit "}Due Date{dateInput && "?"}
+            </label>
             <input
               type="checkbox"
               onClick={() => {
@@ -123,6 +129,7 @@ function TodoForm({ isEditing, isNew, handleNew, handleEdit, todoData }) {
               onChange={(e) => {
                 setDueDate(e.target.value);
               }}
+              value={dueDate}
               type="date"
               name="newtodo-date"
               id="newtodo-date"

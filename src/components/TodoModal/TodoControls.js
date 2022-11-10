@@ -4,8 +4,8 @@ import ReactDOM from "react-dom";
 import Filter from "../Filter";
 import TodoModal from "../TodoModal/TodoModal";
 
+import "./TodoControls.css";
 const portalElement = document.querySelector("#modal");
-
 function TodoControls({
   exiting,
   openControls,

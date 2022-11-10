@@ -1,0 +1,48 @@
+.controls-button {
+  width: 25px;
+  cursor: pointer;
+  transition: 0.5s all;
+}
+.controls-button:hover {
+  width: 30px;
+}
+.controls-button.clicked {
+  width: 25px;
+  cursor: pointer;
+  transition: 0.5s all;
+  transform: rotate(180deg);
+}
+.controls-button.clicked:hover {
+  width: 30px;
+}
+
+.todos-list-controls.cs-open {
+  height: fit-content;
+  opacity: 1;
+  z-index: -1;
+  animation: controls-enter 0.25s linear;
+}
+
+.todos-list-controls.cs-open.exiting {
+  opacity: 0;
+  animation: controls-exit 0.25s linear;
+  overflow: hidden;
+}
+
+@keyframes controls-enter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes controls-exit {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,121 @@
+.todo-form {
+  display: flex;
+  border: thin transparent solid;
+}
+.todo-form form {
+  width: 90vw;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-section {
+  display: flex;
+  flex-direction: column;
+}
+.todo-section:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.todo-section span {
+  color: rgba(255, 0, 0, 0.7);
+  background-color: rgba(71, 87, 107, 0.15);
+  border-radius: 20px;
+  width: 80%;
+  margin: auto;
+  animation: error 0.5s linear;
+}
+
+.todo-input {
+  display: flex;
+  width: 95%;
+  margin: 10px auto;
+  align-items: center;
+}
+input:focus {
+  outline: none;
+}
+.todo-input:nth-child(2) {
+  margin-bottom: 15px;
+}
+
+.todo-input.invalid-input > input {
+  border: thin solid red;
+}
+.todo-input label {
+  margin-right: 18px;
+}
+.todo-input input {
+  border: thin transparent solid;
+  padding: 10px;
+  border-radius: 15px;
+}
+.todo-input select {
+  border: thin transparent solid;
+  padding: 10px;
+  border-radius: 15px;
+}
+.todo-input p {
+  margin-right: 10px;
+}
+.todo-input:first-child input {
+  width: 100%;
+}
+.todo-input:nth-child(2) > input:nth-child(3) {
+  margin-left: 15px;
+}
+
+.todo-form-btns {
+  width: 30%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.form-btns button,
+.form-cancel {
+  border: solid thin transparent;
+  box-shadow: 0px 5px 5px #ccc;
+  cursor: pointer;
+  padding: 6px;
+  font-weight: bolder;
+  transition: all 0.5s;
+  border-radius: 5px;
+}
+.form-btns button {
+  background-color: white;
+  margin-top: 10px;
+}
+.form-cancel {
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+.form-btns button:hover,
+.form-cancel:hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.form-btns.disabled:hover button {
+  background-color: white;
+  color: #ccc;
+  cursor: default;
+}
+
+.individual-todo.sticky.taped.post-it-modal {
+  width: 50%;
+  min-width: 50%;
+}
+
+@keyframes error {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
