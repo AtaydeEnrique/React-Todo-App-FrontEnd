@@ -22,20 +22,20 @@ function TodoTable() {
 
   useEffect(() => {
     const saveData = (data) => {
+      // console.log(data);
       dispatch({ type: "GET", payload: { data: data[0] } });
       dispatch({ type: "GET_INFO", payload: { data: data[1] } });
     };
-    try {
-      fetchData(
-        {
-          url: `http://localhost:9090/todos?sortBy=${sortBy}&filterBy=${
-            filter.length === 0 ? ",," : filter.join(",")
-          }&direction=${sortDirection}&offset=${offset}`,
-        },
-        saveData
-      );
-    } catch (e) {}
-  }, [dispatch, reload, filter, offset, sortBy, sortDirection]);
+
+    fetchData(
+      {
+        url: `http://localhost:9090/todos?sortBy=${sortBy}&filterBy=${
+          filter.length === 0 ? ",," : filter.join(",")
+        }&direction=${sortDirection}&offset=${offset}`,
+      },
+      saveData
+    ).catch();
+  }, [fetchData, dispatch, reload, filter, offset, sortBy, sortDirection]);
 
   return (
     <>

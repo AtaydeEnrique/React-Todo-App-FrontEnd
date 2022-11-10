@@ -1,7 +1,8 @@
 const reloadReducer = (state = false, action) => {
   switch (action.type) {
     case "RELOAD":
-      return !state;
+      state = !state;
+      return state;
     default:
       return state;
   }

@@ -48,37 +48,39 @@ function TodoForm() {
     };
 
     if (isNew) {
-      try {
-        postData({
-          url: `http://localhost:9090/todos/`,
-          method: "POST",
-          headers: new Headers({
-            Accept: "application.json",
-            "Content-Type": "application/json",
-          }),
-          body: JSON.stringify(data),
-        });
-        dispatch({ type: "NEW_TODO" });
-        dispatch({ type: "RELOAD" });
-      } catch (e) {}
+      postData({
+        url: `http://localhost:9090/todos/`,
+        method: "POST",
+        headers: new Headers({
+          Accept: "application.json",
+          "Content-Type": "application/json; charset=UTF-8",
+        }),
+        body: JSON.stringify(data),
+      })
+        .then(() => {
+          dispatch({ type: "RELOAD" });
+          dispatch({ type: "NEW_TODO" });
+        })
+        .catch();
     }
 
     if (isEditing) {
-      try {
-        postData({
-          url: `http://localhost:9090/todos/${todoData.id}`,
-          method: "PUT",
-          headers: new Headers({
-            "Content-type": "application/json; charset=UTF-8",
-          }),
-          body: JSON.stringify(data),
-        });
-        dispatch({ type: "EDIT_TODO" });
-        dispatch({
-          type: "PUT_INFO",
-          payload: { data: data, id: todoData.id },
-        });
-      } catch (e) {}
+      postData({
+        url: `http://localhost:9090/todos/${todoData.id}`,
+        method: "PUT",
+        headers: new Headers({
+          "Content-type": "application/json; charset=UTF-8",
+        }),
+        body: JSON.stringify(data),
+      })
+        .then(() => {
+          dispatch({
+            type: "PUT_INFO",
+            payload: { data: data, id: todoData.id },
+          });
+          dispatch({ type: "EDIT_TODO" });
+        })
+        .catch();
     }
   };
 

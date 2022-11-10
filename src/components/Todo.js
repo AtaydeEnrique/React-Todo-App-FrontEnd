@@ -11,31 +11,34 @@ function Todo({ todo }) {
   const updateData = useHttp();
 
   const deleteTodoHandler = async () => {
-    try {
-      fetch(`http://localhost:9090/todos/${todo.id}`, {
-        method: "DELETE",
-      });
-    } catch (e) {}
-    dispatch({ type: "RELOAD" });
+    fetch(`http://localhost:9090/todos/${todo.id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        dispatch({ type: "RELOAD" });
+        dispatch({ type: "DELETE", payload: todo.id });
+      })
+      .catch();
   };
 
   const changeCompletedHandler = async () => {
     setIsChecked(!isChecked);
 
-    try {
-      updateData({
-        url: `http://localhost:9090/todos/${todo.id}/${
-          isChecked ? "undone" : "done"
-        }`,
-        method: "PUT",
-        headers: new Headers({
-          "Content-type": "application/json; charset=UTF-8",
-        }),
-        body: JSON.stringify({ ...todo, completed: isChecked }),
-      });
-      dispatch({ type: "PUT_CHECK", payload: todo });
-      dispatch({ type: "RELOAD" });
-    } catch (e) {}
+    updateData({
+      url: `http://localhost:9090/todos/${todo.id}/${
+        isChecked ? "undone" : "done"
+      }`,
+      method: "PUT",
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8",
+      }),
+      body: JSON.stringify({ ...todo, completed: isChecked }),
+    })
+      .then(() => {
+        dispatch({ type: "PUT_CHECK", payload: todo });
+        dispatch({ type: "RELOAD" });
+      })
+      .catch();
   };
 
   const todoPriority =

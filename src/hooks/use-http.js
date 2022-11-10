@@ -1,6 +1,7 @@
 import { useCallback } from "react";
-
+import { useDispatch } from "react-redux";
 const useHttp = () => {
+  const dispatch = useDispatch();
   const sendRequest = useCallback(async (requestConfig, applyData) => {
     try {
       const response = await fetch(requestConfig.url, {
